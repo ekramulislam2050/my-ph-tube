@@ -13,10 +13,15 @@ const loadCategories = async () => {
 const displayData = (categoriesOfData) => {
     categoriesOfData.forEach(item => {
         const btnContainer = document.getElementById("categories");
-        const button = document.createElement("button");
-        button.classList.add("btn");
-        button.innerText = item.category;
-        btnContainer.appendChild(button)
+        const div = document.createElement("div");
+        div.innerHTML=`
+            <button class="btn" onclick="categoriesOfVideo( ${item.category_id
+            })">
+                ${item.category}
+            </button>
+        `
+        
+        btnContainer.appendChild(div)
     })
 
 }
@@ -34,25 +39,64 @@ const fetchVideos = async () => {
   }
 
 }
+// load categories of videos
+const categoriesOfVideo = async(id)=>{
+    console.log(id)
+    try{
+        const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+        const data = await res.json()
+        const video = data.categories
+        displayVideos(video)
+      }
+      catch(error){
+            console.log(error)
+      }
+    
+}
+
+// convert time
+const timeConverter = (time) =>{
+     const hours = parseInt(time / 3600);
+     const  remainingSecond = time % 3600;
+     const minute = parseInt( remainingSecond / 60);
+     const second = remainingSecond % 60;
+     return `${hours} hour ${minute} minute ${second} second ago`
+}
 // display videos
 const displayVideos = (videos) => {
+    console.log(videos)
+    const cardContainer = document.getElementById("card-container");
+    cardContainer.innerHTML=''
     videos.forEach((video) => {
-        const cardContainer = document.getElementById("card-container");
+       
         const div = document.createElement("div")
         div.classList.add = ("card card-compact")
         div.innerHTML =
             `
-                <figure>
-                    <img
+                <figure class="h-[200px] relative">
+                    <img class="h-full w-full object-cover"
                     src=${video.thumbnail} 
                     alt="Shoes" />
+                    ${video.others.posted_date.length == 0?'':`<span class="absolute right-4 bottom-2 bg-black text-white rounded p-1 text-xs"> ${timeConverter(video.others.posted_date)}</span> `}
+
+                    
                 </figure>
-                <div class="card-body">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Buy Now</button>
-                    </div>
+                <div class="px-0 py-2 flex">
+                  <div class = 'w-10 h-10'>
+                      <img class="w-full h-full   rounded-full object-cover" src=${video.authors[0].
+                        profile_picture}/>
+                  </div>
+                  <div class="">
+                      <h2 class="font-bold pl-2">${video.title
+                        }</h2>
+                        <div class="flex pl-2">
+                           <p>${video.authors[0].profile_name} </p>
+                           ${video.authors[0].
+                            verified == true?`<img class="w-5 h-5 pl-1" src="https://img.icons8.com/?size=48&id=D9RtvkuOe31p&format=png"/>`:""
+                            }
+                           
+                        </div>
+                  </div>
                 </div>
     
        
