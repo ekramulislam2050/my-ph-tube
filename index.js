@@ -67,7 +67,21 @@ const timeConverter = (time) =>{
 // display videos
 const displayVideos = (videos) => {
     const cardContainer = document.getElementById("card-container");
-     cardContainer.innerHTML=''
+     cardContainer.innerHTML='';
+     if(videos.length == 0){
+        cardContainer.classList.remove("grid")
+        cardContainer.innerHTML=` 
+                <div class='min-h-[400px] flex flex-col w-full justify-center items-center'>
+                  <img src="./asset/Icon.png"/>
+                  <h2 class="text-xl font-bold text-center">No content here in this category </h2>
+                     
+               </div>
+               `
+              
+      
+     }else{
+        cardContainer.classList.add("grid")
+     }
     videos.forEach((video) => {
         const div = document.createElement("div")
         div.classList.add = ("card card-compact")
