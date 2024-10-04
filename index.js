@@ -86,7 +86,7 @@ const loadDetails=async(videoId)=>{
 }
 // display details
 const displayDetails=(details)=>{
-     console.log(details)
+     document.getElementById("modalBtn").click();
 }
 // display videos
 const displayVideos = (videos) => {
