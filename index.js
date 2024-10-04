@@ -71,6 +71,23 @@ const timeConverter = (time) =>{
      const second = remainingSecond % 60;
      return `${hours} hour ${minute} minute ${second} second ago`
 }
+// load details
+const loadDetails=async(videoId)=>{
+     const uri = 'https://openapi.programming-hero.com/api/phero-tube/video/aaac'
+     try{
+        const res = await fetch(uri)
+        const details = await res.json()
+        displayDetails(details)
+     }
+     catch(error){
+        console.log(error)
+     }
+    
+}
+// display details
+const displayDetails=(details)=>{
+     console.log(details)
+}
 // display videos
 const displayVideos = (videos) => {
     const cardContainer = document.getElementById("card-container");
@@ -117,7 +134,11 @@ const displayVideos = (videos) => {
                             }
                            
                         </div>
+                          <p> <button class="btn btn-sm btn-error" onclick="loadDetails('${video.video_id}')">details</button  </p>
                   </div>
+               
+                  
+              
                 </div>
     
        
