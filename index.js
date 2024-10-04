@@ -11,12 +11,12 @@ const loadCategories = async () => {
     }
 }
 const displayData = (categoriesOfData) => {
+    const btnContainer = document.getElementById("categories");
     categoriesOfData.forEach(item => {
-        const btnContainer = document.getElementById("categories");
+       
         const div = document.createElement("div");
         div.innerHTML=`
-            <button class="btn" onclick="categoriesOfVideo( ${item.category_id
-            })">
+            <button class="btn" onclick="categoriesOfVideo( ${item.category_id})">
                 ${item.category}
             </button>
         `
@@ -32,7 +32,7 @@ const fetchVideos = async () => {
     const dataOfVideos = await fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
     const data = await dataOfVideos.json()
     const videos = data.videos
-    displayVideos(videos)
+     displayVideos(videos)
   }
   catch(error){
         console.log(error)
@@ -41,12 +41,14 @@ const fetchVideos = async () => {
 }
 // load categories of videos
 const categoriesOfVideo = async(id)=>{
-    console.log(id)
+
     try{
         const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
         const data = await res.json()
-        const video = data.categories
-        displayVideos(video)
+         
+        const video = data.category
+      
+         displayVideos(video)
       }
       catch(error){
             console.log(error)
@@ -64,11 +66,9 @@ const timeConverter = (time) =>{
 }
 // display videos
 const displayVideos = (videos) => {
-    console.log(videos)
     const cardContainer = document.getElementById("card-container");
-    cardContainer.innerHTML=''
+     cardContainer.innerHTML=''
     videos.forEach((video) => {
-       
         const div = document.createElement("div")
         div.classList.add = ("card card-compact")
         div.innerHTML =
@@ -102,6 +102,7 @@ const displayVideos = (videos) => {
        
        `
        cardContainer.appendChild(div)
+       
     })
 }
 fetchVideos()
