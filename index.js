@@ -73,7 +73,7 @@ const timeConverter = (time) =>{
 }
 // load details
 const loadDetails=async(videoId)=>{
-     const uri = 'https://openapi.programming-hero.com/api/phero-tube/video/aaac'
+     const uri = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`
      try{
         const res = await fetch(uri)
         const details = await res.json()
@@ -86,7 +86,13 @@ const loadDetails=async(videoId)=>{
 }
 // display details
 const displayDetails=(details)=>{
-     document.getElementById("modalBtn").click();
+
+    
+     document.getElementById("videoDetails").innerHTML=`
+        <img src=${details.video.thumbnail}/>
+        <p> ${details.video.description}</p>
+     `
+     document.getElementById("modalForDetails").showModal();
 }
 // display videos
 const displayVideos = (videos) => {
